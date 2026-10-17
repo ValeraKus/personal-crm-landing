@@ -1,0 +1,121 @@
+/* Context landing — design tokens (Tailwind CSS 4).
+   The only place for colors, fonts, type sizes, line heights, shadows and container widths.
+   Spacing uses Tailwind's 4px scale (--spacing), e.g. p-5.5 = 22px. */
+
+/* Self-hosted fonts from design/assets/fonts, served from public/fonts */
+@font-face { font-family: "Rubik Mono One"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/rubik-mono-one-cyrillic-400-normal.woff2") format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Rubik Mono One"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/rubik-mono-one-latin-400-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Press Start 2P"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/press-start-2p-cyrillic-400-normal.woff2") format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Press Start 2P"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/press-start-2p-latin-400-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Golos Text"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/golos-text-cyrillic-400-normal.woff2") format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Golos Text"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/golos-text-latin-400-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Golos Text"; font-style: normal; font-weight: 500; font-display: swap; src: url("/fonts/golos-text-cyrillic-500-normal.woff2") format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Golos Text"; font-style: normal; font-weight: 500; font-display: swap; src: url("/fonts/golos-text-latin-500-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Golos Text"; font-style: normal; font-weight: 600; font-display: swap; src: url("/fonts/golos-text-cyrillic-600-normal.woff2") format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Golos Text"; font-style: normal; font-weight: 600; font-display: swap; src: url("/fonts/golos-text-latin-600-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Golos Text"; font-style: normal; font-weight: 700; font-display: swap; src: url("/fonts/golos-text-cyrillic-700-normal.woff2") format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Golos Text"; font-style: normal; font-weight: 700; font-display: swap; src: url("/fonts/golos-text-latin-700-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+@theme {
+  /* Colors: only the design palette, Tailwind defaults are removed */
+  --color-*: initial;
+  --color-ink: #241A3A;          /* main text, borders, hard shadows, dark buttons */
+  --color-ink-deep: #000000;     /* inner bottom-right bevel of dark buttons, button hover */
+  --color-ink-soft: #463A5E;     /* body copy on light */
+  --color-ink-muted: #5A4E72;    /* secondary copy in cards */
+  --color-ink-faint: #6A5A8C;    /* captions, small pixel labels */
+  --color-bevel: #5A4A80;        /* inner top-left bevel of dark buttons */
+
+  --color-paper: #F1EAFF;        /* page background (lavender) */
+  --color-grid: #DCCFFA;         /* background grid lines on light */
+  --color-white: #FFFFFF;        /* window bodies */
+
+  --color-accent: #FF8FC7;       /* pink: window title bars, icons, tags (main accent) */
+  --color-lilac: #C9B6FF;        /* secondary title bars, dashed dividers, borders on dark */
+  --color-violet: #7B4FE0;       /* highlighted word in headings on light */
+  --color-butter: #FFF4B0;       /* yellow tag/highlight, "card" title bar */
+
+  --color-night: #241A3A;        /* dark "benefits" band */
+  --color-night-grid: #33285A;   /* grid lines on dark band */
+  --color-night-card: #2F2448;   /* cards on dark band */
+  --color-night-chip: #4A3D66;   /* struck-out chat bubble */
+  --color-night-text: #DCD2F0;   /* body copy on dark */
+  --color-night-muted: #B8ACCF;  /* struck-out bubble text */
+  --color-night-dash: #4B3D6E;   /* dashed decorative cell border */
+
+  /* Fonts */
+  --font-display: "Rubik Mono One", monospace;      /* H1/H2, always uppercase */
+  --font-pixel: "Press Start 2P", monospace;        /* logo, buttons, window titles, tags */
+  --font-sans: "Golos Text", system-ui, sans-serif; /* body */
+
+  /* Type sizes in px of the layout (text-15 = 15px), Tailwind defaults are removed */
+  --text-*: initial;
+  --text-8: 0.5rem;
+  --text-9: 0.5625rem;
+  --text-10: 0.625rem;
+  --text-11: 0.6875rem;
+  --text-12: 0.75rem;
+  --text-13: 0.8125rem;
+  --text-14: 0.875rem;
+  --text-15: 0.9375rem;
+  --text-16: 1rem;
+  --text-18: 1.125rem;
+  --text-19: 1.1875rem;
+  --text-20: 1.25rem;
+  --text-22: 1.375rem;
+  --text-26: 1.625rem;
+  --text-28: 1.75rem;
+  --text-29: 1.8125rem;
+  --text-30: 1.875rem;
+  --text-38: 2.375rem;
+  --text-44: 2.75rem;
+  --text-52: 3.25rem;
+
+  /* Line heights */
+  --leading-h1: 1.12;            /* H1 mobile */
+  --leading-h1-lg: 1.08;         /* H1 desktop */
+  --leading-h2: 1.1;             /* "Знакомо?", "Что изменится" */
+  --leading-h2-solution: 1.12;   /* "Ваша личная база знакомств" */
+  --leading-h2-cta: 1.2;         /* final call to action, mobile */
+  --leading-h2-cta-lg: 1.18;     /* final call to action, desktop */
+  --leading-body: 1.5;           /* lead and desktop card copy */
+  --leading-card: 1.45;          /* mobile card copy */
+  --leading-note: 1.4;           /* small notes, dark strip on desktop */
+
+  /* Hard pixel shadows (no blur) */
+  --shadow-px-sm: 3px 3px 0 var(--color-ink);
+  --shadow-px: 4px 4px 0 var(--color-ink);
+  --shadow-px-mid: 5px 5px 0 var(--color-ink);
+  --shadow-px-md: 6px 6px 0 var(--color-ink);
+  --shadow-px-lg: 8px 8px 0 var(--color-ink);
+  /* Retro bevel for dark buttons and dark strip */
+  --shadow-bevel: inset -4px -4px 0 var(--color-ink-deep), inset 4px 4px 0 var(--color-bevel);
+  --shadow-bevel-lg: inset -5px -5px 0 var(--color-ink-deep), inset 5px 5px 0 var(--color-bevel);
+
+  /* Container widths */
+  --container-page: 80rem;       /* 1280px page container */
+  --container-cta: 56.5rem;      /* final call-to-action window, 900px + borders */
+  --container-lead: 35rem;       /* hero lead paragraph on desktop */
+
+  --radius-*: initial;           /* everything is square: no rounded corners anywhere */
+}
+
+/* Light page grid: 26px cells on mobile, 32px from md up */
+@utility bg-grid-light {
+  background-color: var(--color-paper);
+  background-image:
+    linear-gradient(var(--color-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+  background-size: 26px 26px;
+  @media (width >= 48rem) { background-size: 32px 32px; }
+}
+
+/* Dark grid for the "benefits" band */
+@utility bg-grid-night {
+  background-color: var(--color-night);
+  background-image:
+    linear-gradient(var(--color-night-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-night-grid) 1px, transparent 1px);
+  background-size: 26px 26px;
+  @media (width >= 48rem) { background-size: 32px 32px; }
+}

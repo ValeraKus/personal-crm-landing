@@ -1,0 +1,31 @@
+---
+// Inline pixel SVG from src/icons, so that fill="currentColor" follows the text color.
+export type IconName =
+  | "arrow-right"
+  | "bell"
+  | "check"
+  | "clock"
+  | "cursor"
+  | "heart"
+  | "heart-broken"
+  | "lock"
+  | "search"
+  | "sparkle"
+  | "sparkle-small";
+
+interface Props {
+  name: IconName;
+  class?: string;
+}
+
+const icons = import.meta.glob<string>("../icons/*.svg", { query: "?raw", import: "default", eager: true });
+
+const { name, class: className } = Astro.props;
+const svg = icons[`../icons/${name}.svg`];
+if (!svg) throw new Error(`Unknown icon: ${name}`);
+
+const attrs = `aria-hidden="true" focusable="false"${className ? ` class="${className}"` : ""}`;
+const html = svg.replace("<svg", `<svg ${attrs}`);
+---
+
+<Fragment set:html={html} />

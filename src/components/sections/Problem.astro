@@ -1,0 +1,48 @@
+---
+import PixelIcon from "../PixelIcon.astro";
+
+// "chip" is shown as a pixel tag right after the text
+const problems: { text: string; chip?: string; tail?: string }[] = [
+  {
+    text: "После конференции у вас остаётся десяток визиток и контактов в LinkedIn. Через месяц уже не вспомнить, кто есть кто.",
+  },
+  { text: "«Давайте созвонимся после праздников», а потом ни вы, ни собеседник об этом не вспоминаете." },
+  { text: "Нужен специалист, и вы точно знаете, что с кем-то таким знакомились. Но с кем и где?" },
+  {
+    text: "Контакты разбросаны по телефону, почте, мессенджерам и заметкам, а половина подписана как ",
+    chip: "Саша (митап)",
+    tail: ".",
+  },
+];
+---
+
+<section aria-labelledby="problem-title" class="mx-auto flex max-w-page flex-col gap-5 px-4 pt-14 lg:gap-9 lg:px-10 lg:pt-16">
+  <h2 id="problem-title" class="px-1 font-display text-30 leading-h2 uppercase lg:px-0 lg:text-52">Знакомо?</h2>
+
+  <ul class="flex flex-col gap-3 lg:grid lg:grid-cols-2 lg:gap-5">
+    {
+      problems.map(({ text, chip, tail }) => (
+        <li class="flex items-start gap-3 border-2 border-ink bg-white p-3.5 shadow-px lg:gap-4.5 lg:p-6 lg:shadow-px-mid">
+          <span
+            aria-hidden="true"
+            class="flex size-6.5 shrink-0 items-center justify-center border-2 border-ink bg-accent font-pixel text-10 lg:size-8.5 lg:text-13"
+          >
+            !
+          </span>
+          <p class="text-15 leading-card lg:text-18 lg:leading-body">
+            {text}
+            {chip && <span class="bg-butter px-1 py-0.5 font-pixel text-10 lg:px-1.5 lg:text-12">{chip}</span>}
+            {tail}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="flex items-center gap-3.5 bg-ink p-4.5 text-white shadow-bevel lg:gap-5 lg:px-8 lg:py-7 lg:shadow-bevel-lg">
+    <PixelIcon name="heart-broken" class="h-6 w-7 shrink-0 text-accent lg:h-8.5 lg:w-10" />
+    <p class="text-16 leading-card font-semibold lg:text-22 lg:leading-note">
+      Полезные связи появляются постоянно и так же постоянно теряются.
+    </p>
+  </div>
+</section>

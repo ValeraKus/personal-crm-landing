@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+/* The design handoff is reference material, not page source */
+@source not "../../design";
+
+@layer base {
+  html {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    /* Text without explicit leading uses the font's own line height, as in the layout */
+    line-height: normal;
+  }
+
+  a:focus-visible {
+    outline: 3px solid var(--color-violet);
+    outline-offset: 3px;
+  }
+}

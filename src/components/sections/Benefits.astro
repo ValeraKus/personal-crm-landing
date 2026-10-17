@@ -1,0 +1,51 @@
+---
+import PixelIcon from "../PixelIcon.astro";
+
+// "lead" is the bold first sentence; "chat" adds the before/after messages
+const benefits: { lead: string; text?: string; chat?: boolean }[] = [
+  { lead: "Вы держите слово.", text: "Обещания и договорённости не забываются, и вам доверяют." },
+  { lead: "Знакомства превращаются в возможности.", text: "Вы вспоминаете нужного человека вовремя." },
+  { lead: "Встречи начинаются с контекста.", chat: true },
+  { lead: "Сеть контактов растёт, а не теряется.", text: "Каждое новое знакомство остаётся с вами надолго." },
+  { lead: "Голова свободна.", text: "Не нужно держать всё в памяти: система помнит за вас." },
+];
+---
+
+<section aria-labelledby="benefits-title" class="mt-18 bg-grid-night text-paper lg:mt-32">
+  <div class="mx-auto flex max-w-page flex-col gap-5.5 px-4 pt-14 pb-16 lg:gap-10 lg:px-10 lg:pt-28 lg:pb-30">
+    <h2 id="benefits-title" class="px-1 font-display text-28 leading-h2 uppercase lg:px-0 lg:text-52">
+      Что <span class="text-accent">изменится</span>
+    </h2>
+
+    <ul class="flex flex-col gap-3 lg:grid lg:grid-cols-2 lg:gap-5 xl:grid-cols-3">
+      {
+        benefits.map(({ lead, text, chat }) => (
+          <li class="flex flex-col gap-3.5 border-2 border-lilac bg-night-card p-4 lg:gap-4.5 lg:p-7">
+            <div class="flex items-start gap-3.5 lg:contents">
+              <span aria-hidden="true" class="flex size-6 shrink-0 items-center justify-center bg-accent lg:size-8">
+                <PixelIcon name="check" class="size-3.5 text-ink lg:size-4.5" />
+              </span>
+              <p class="text-15 leading-card text-night-text lg:text-18 lg:leading-body">
+                <b class="text-white">{lead}</b>
+                {text && ` ${text}`}
+              </p>
+            </div>
+            {chat && (
+              <div class="flex flex-col gap-2 pl-9.5 lg:gap-2.5 lg:pl-0">
+                <span class="self-start bg-night-chip px-2.5 py-2 text-13 text-night-muted line-through lg:px-3 lg:py-2.5 lg:text-15">
+                  «Напомните, где мы виделись?»
+                </span>
+                <span class="self-end border-2 border-white bg-accent px-2.5 py-2 text-13 font-semibold text-ink lg:px-3 lg:py-2.5 lg:text-15">
+                  «Как продвигается ваш проект?»
+                </span>
+              </div>
+            )}
+          </li>
+        ))
+      }
+      <li aria-hidden="true" class="hidden min-h-41 items-center justify-center border-2 border-dashed border-night-dash lg:flex">
+        <PixelIcon name="heart" class="h-12 w-14 text-accent" />
+      </li>
+    </ul>
+  </div>
+</section>

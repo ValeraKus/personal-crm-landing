@@ -1,0 +1,30 @@
+---
+// Main call to action: dark bevelled button with a pixel arrow, leads to the app.
+import PixelIcon from "./PixelIcon.astro";
+import { APP_URL } from "../config";
+
+interface Props {
+  size: "hero" | "final";
+  class?: string;
+}
+
+const { size, class: className } = Astro.props;
+
+const sizeClass =
+  size === "hero"
+    ? "h-14 shadow-bevel lg:h-16 lg:px-9 lg:text-14"
+    : "h-15 shadow-bevel lg:h-17 lg:px-11 lg:text-15 lg:shadow-bevel-lg";
+const iconClass = size === "hero" ? "size-3.5 text-accent lg:size-4" : "size-3.5 text-accent lg:size-4.5";
+---
+
+<a
+  href={APP_URL}
+  class:list={[
+    "flex items-center justify-center gap-3 bg-ink font-pixel text-12 text-white hover:bg-ink-deep lg:gap-3.5",
+    sizeClass,
+    className,
+  ]}
+>
+  Начать бесплатно
+  <PixelIcon name="arrow-right" class={iconClass} />
+</a>

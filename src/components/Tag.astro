@@ -1,0 +1,13 @@
+---
+// Pixel tag chip.
+interface Props {
+  color: "accent" | "lilac" | "butter" | "white";
+}
+
+const { color } = Astro.props;
+const bg = { accent: "bg-accent", lilac: "bg-lilac", butter: "bg-butter", white: "bg-white" }[color];
+---
+
+<span class:list={["border-[1.5px] border-ink px-1.75 py-1.5 font-pixel text-8 lg:px-2.25 lg:py-1.75 lg:text-9", bg]}>
+  <slot />
+</span>

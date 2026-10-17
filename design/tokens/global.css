@@ -1,0 +1,84 @@
+/* Context landing — design tokens for Tailwind CSS 4.
+   Put in src/styles/global.css and import it once in the layout.
+   Fonts: npm i @fontsource/rubik-mono-one @fontsource/press-start-2p @fontsource/golos-text
+   (or copy ../assets/fonts/*.woff2 + fonts.css into public/fonts). */
+
+@import "@fontsource/rubik-mono-one/400.css";
+@import "@fontsource/press-start-2p/400.css";
+@import "@fontsource/golos-text/400.css";
+@import "@fontsource/golos-text/500.css";
+@import "@fontsource/golos-text/600.css";
+@import "@fontsource/golos-text/700.css";
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-ink: #241A3A;          /* main text, borders, hard shadows, dark buttons */
+  --color-ink-deep: #000000;     /* inner bottom-right bevel of dark buttons */
+  --color-ink-soft: #463A5E;     /* body copy on light */
+  --color-ink-muted: #5A4E72;    /* secondary copy in cards */
+  --color-ink-faint: #6A5A8C;    /* captions, small pixel labels */
+  --color-bevel: #5A4A80;        /* inner top-left bevel of dark buttons */
+
+  --color-paper: #F1EAFF;        /* page background (lavender) */
+  --color-grid: #DCCFFA;         /* background grid lines on light */
+  --color-white: #FFFFFF;        /* window bodies */
+
+  --color-accent: #FF8FC7;       /* pink — window title bars, icons, tags (main accent) */
+  --color-lilac: #C9B6FF;        /* secondary title bars, dashed dividers, borders on dark */
+  --color-violet: #7B4FE0;       /* highlighted word in headings on light */
+  --color-butter: #FFF4B0;       /* yellow tag/highlight, "card" title bar */
+
+  --color-night: #241A3A;        /* dark "benefits" band */
+  --color-night-grid: #33285A;   /* grid lines on dark band */
+  --color-night-card: #2F2448;   /* cards on dark band */
+  --color-night-chip: #4A3D66;   /* struck-out chat bubble */
+  --color-night-text: #DCD2F0;   /* body copy on dark */
+  --color-night-muted: #B8ACCF;  /* struck-out bubble text */
+  --color-night-dash: #4B3D6E;   /* dashed decorative cell border */
+
+  /* Fonts */
+  --font-display: "Rubik Mono One", monospace;  /* H1/H2, always uppercase */
+  --font-pixel: "Press Start 2P", monospace;    /* logo, buttons, window titles, tags */
+  --font-sans: "Golos Text", system-ui, sans-serif; /* body */
+
+  /* Hard pixel shadows (no blur) */
+  --shadow-px-sm: 3px 3px 0 var(--color-ink);
+  --shadow-px: 4px 4px 0 var(--color-ink);
+  --shadow-px-md: 6px 6px 0 var(--color-ink);
+  --shadow-px-lg: 8px 8px 0 var(--color-ink);
+  /* Retro bevel for dark buttons and dark strip */
+  --shadow-bevel: inset -4px -4px 0 var(--color-ink-deep), inset 4px 4px 0 var(--color-bevel);
+  --shadow-bevel-lg: inset -5px -5px 0 var(--color-ink-deep), inset 5px 5px 0 var(--color-bevel);
+
+  --radius-none: 0;              /* everything is square — no rounded corners anywhere */
+}
+
+@layer base {
+  html { background: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); }
+  body { margin: 0; }
+}
+
+@utility bg-grid {
+  /* Light page grid: 26px cells on mobile, 32px from md up */
+  background-color: var(--color-paper);
+  background-image:
+    linear-gradient(var(--color-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+  background-size: 26px 26px;
+  @media (width >= 48rem) { background-size: 32px 32px; }
+}
+
+@utility bg-grid-night {
+  background-color: var(--color-night);
+  background-image:
+    linear-gradient(var(--color-night-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-night-grid) 1px, transparent 1px);
+  background-size: 26px 26px;
+  @media (width >= 48rem) { background-size: 32px 32px; }
+}
+
+@utility pixelated {
+  shape-rendering: crispEdges;
+  image-rendering: pixelated;
+}

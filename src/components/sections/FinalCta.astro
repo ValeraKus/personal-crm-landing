@@ -1,0 +1,34 @@
+---
+import Window from "../Window.astro";
+import PixelButton from "../PixelButton.astro";
+import PixelIcon from "../PixelIcon.astro";
+---
+
+<section
+  aria-labelledby="cta-title"
+  class="relative mx-auto flex max-w-page flex-col px-4 pt-16 lg:items-center lg:px-10 lg:pt-32"
+>
+  <PixelIcon
+    name="sparkle"
+    class="pointer-events-none absolute top-7.5 right-6.5 size-6.5 text-accent lg:top-22.5 lg:right-30 lg:size-9"
+  />
+  <PixelIcon name="sparkle-small" class="pointer-events-none absolute top-55 left-35 hidden size-4.5 text-ink xl:block" />
+
+  <Window
+    title="новое_знакомство.exe"
+    bar="accent"
+    controls={2}
+    class="mt-4 shadow-px-md lg:mt-0 lg:w-full lg:max-w-cta lg:shadow-px-lg"
+  >
+    <div class="flex flex-col gap-4.5 px-4.5 pt-5.5 pb-6 lg:items-center lg:gap-7 lg:p-14 lg:text-center">
+      <!-- On desktop "потенциальная возможность." stays on one line, as with &nbsp; in the copy -->
+      <h2 id="cta-title" class="font-display text-22 leading-h2-cta uppercase lg:text-38 lg:leading-h2-cta-lg">
+        Каждое знакомство — <span class="lg:whitespace-nowrap">потенциальная <span class="text-violet">возможность</span>.</span> Не&nbsp;дайте им потеряться.
+      </h2>
+      <p class="text-16 leading-body text-ink-soft lg:text-20">
+        Добавьте первые контакты с последнего мероприятия, это займёт пару минут.
+      </p>
+      <PixelButton size="final" />
+    </div>
+  </Window>
+</section>

@@ -1,0 +1,38 @@
+---
+// Retro OS window: title bar + white body (default slot).
+// Slots: "icon" before the title, "end" at the right edge of the title bar.
+interface Props {
+  title: string;
+  bar: "accent" | "lilac" | "butter";
+  controls?: 0 | 2 | 3;
+  size?: "md" | "sm";
+  class?: string;
+}
+
+const { title, bar, controls = 0, size = "md", class: className } = Astro.props;
+
+const barColor = { accent: "bg-accent", lilac: "bg-lilac", butter: "bg-butter" }[bar];
+const barSize =
+  size === "md"
+    ? "h-9 justify-between px-2.5 lg:h-10.5 lg:px-3.5"
+    : "h-7.5 gap-2 px-2.5 lg:h-8.5 lg:gap-2.5 lg:px-3";
+const titleSize = size === "md" ? "text-9 lg:text-11" : "text-8 lg:text-9";
+---
+
+<div class:list={["border-2 border-ink bg-white", className]}>
+  <div aria-hidden="true" class:list={["flex items-center border-b-2 border-ink", barColor, barSize]}>
+    <slot name="icon" />
+    <span class:list={["font-pixel", titleSize]}>{title}</span>
+    <slot name="end" />
+    {
+      controls > 0 && (
+        <span class="flex gap-1.5 lg:gap-2">
+          {Array.from({ length: controls }, (_, i) => (
+            <span class:list={["size-3.5 border-2 border-ink lg:size-4", i === controls - 1 ? "bg-ink" : "bg-white"]} />
+          ))}
+        </span>
+      )
+    }
+  </div>
+  <slot />
+</div>

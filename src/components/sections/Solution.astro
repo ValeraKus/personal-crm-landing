@@ -1,0 +1,89 @@
+---
+import Window from "../Window.astro";
+import PixelIcon, { type IconName } from "../PixelIcon.astro";
+import Tag from "../Tag.astro";
+
+const features: {
+  icon: IconName;
+  title: string;
+  text: string;
+  tags?: { label: string; color: "accent" | "lilac" | "butter" | "white" }[];
+  dark?: boolean;
+}[] = [
+  {
+    icon: "sparkle",
+    title: "Контекст знакомства",
+    text: "Где встретились, кто познакомил, о чём говорили, чем человек занимается и чем может быть полезен.",
+  },
+  { icon: "check", title: "Договорённости", text: "Кто кому что обещал, к какому сроку и на чём остановились." },
+  { icon: "clock", title: "История взаимодействий", text: "Встречи, звонки и переписка в хронологии по каждому человеку." },
+  {
+    icon: "search",
+    title: "Теги и поиск",
+    text: "Нужный человек находится за секунду.",
+    tags: [
+      { label: "врач", color: "accent" },
+      { label: "инвестор", color: "lilac" },
+      { label: "Москва", color: "butter" },
+      { label: "конференция 2026", color: "white" },
+    ],
+  },
+  { icon: "lock", title: "Только ваше", text: "Данные приватны: без рекламы и без передачи третьим лицам.", dark: true },
+];
+---
+
+<section
+  aria-labelledby="solution-title"
+  class="mx-auto flex max-w-page flex-col gap-5 px-4 pt-16 lg:flex-row lg:flex-wrap lg:items-start lg:gap-14 lg:px-10 lg:pt-32"
+>
+  <div class="flex flex-col gap-3.5 px-1 lg:min-w-0 lg:grow-2 lg:basis-90 lg:gap-6 lg:px-0 lg:pt-2">
+    <h2 id="solution-title" class="font-display text-26 leading-h2-solution uppercase lg:text-44">
+      Ваша личная база <span class="text-violet">знакомств</span>
+    </h2>
+    <p class="text-16 leading-body text-ink-soft lg:text-20">
+      Это личный инструмент, чтобы помнить людей и всё, что вас с ними связывает.
+    </p>
+    <PixelIcon name="sparkle" class="pointer-events-none hidden size-8 text-accent lg:block" />
+  </div>
+
+  <Window
+    title="возможности"
+    bar="lilac"
+    class="shadow-px-md lg:min-w-0 lg:grow-3 lg:basis-140 lg:shadow-px-lg"
+  >
+    <span slot="end" class="font-pixel text-8 text-ink-soft lg:text-9">5 объектов</span>
+    <ul>
+      {
+        features.map(({ icon, title, text, tags, dark }, i) => (
+          <li
+            class:list={[
+              "flex gap-3.5 p-4 lg:gap-5 lg:px-7 lg:py-6",
+              i < features.length - 1 && "border-b-2 border-dashed border-lilac",
+            ]}
+          >
+            <span
+              aria-hidden="true"
+              class:list={[
+                "flex size-10 shrink-0 items-center justify-center border-2 border-ink lg:size-12",
+                dark ? "bg-ink text-accent" : "bg-paper text-ink",
+              ]}
+            >
+              <PixelIcon name={icon} class={dark ? "h-4.5 w-4 lg:h-5 lg:w-4.5" : "size-4.5 lg:size-5"} />
+            </span>
+            <div class:list={["flex flex-col", tags ? "gap-2 lg:gap-2.5" : "gap-1 lg:gap-1.5"]}>
+              <h3 class="text-16 font-bold lg:text-19">{title}</h3>
+              {tags && (
+                <div class="flex flex-wrap gap-1.5 lg:gap-2">
+                  {tags.map(({ label, color }) => (
+                    <Tag color={color}>{label}</Tag>
+                  ))}
+                </div>
+              )}
+              <p class="text-14 leading-card text-ink-soft lg:text-16 lg:leading-body">{text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </Window>
+</section>

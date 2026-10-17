@@ -1,0 +1,79 @@
+---
+import Window from "../Window.astro";
+import PixelButton from "../PixelButton.astro";
+import PixelIcon from "../PixelIcon.astro";
+import Tag from "../Tag.astro";
+---
+
+<section aria-labelledby="hero-title" class="mx-auto max-w-page px-4 lg:px-10 lg:pb-24">
+  <div class="mt-5 flex flex-col lg:mt-14 lg:flex-row lg:flex-wrap lg:items-center lg:gap-14">
+    <Window
+      title="контакты.exe"
+      bar="accent"
+      controls={3}
+      class="shadow-px-md lg:min-w-0 lg:grow lg:basis-140 lg:shadow-px-lg"
+    >
+      <div class="flex flex-col gap-4.5 px-4.5 py-5.5 lg:gap-7 lg:p-11">
+        <!-- On phones the highlighted word keeps its own line, as in the layout -->
+        <h1 id="hero-title" class="font-display text-29 leading-h1 uppercase lg:text-52 lg:leading-h1-lg">
+          Все ваши контакты в&nbsp;одном <span class="block text-violet lg:inline">месте</span>
+        </h1>
+        <p class="text-16 leading-body text-ink-soft lg:max-w-lead lg:text-20">
+          Помните, где и как вы познакомились, о чём договорились и когда пора напомнить о себе. Нетворкинг работает,
+          когда контакты не теряются.
+        </p>
+        <PixelButton size="hero" class="lg:self-start" />
+      </div>
+    </Window>
+
+    <!-- Decorative composition: "card" (desktop only) and "reminder" windows -->
+    <div aria-hidden="true" class="pointer-events-none relative h-62.5 lg:h-130 lg:min-w-0 lg:grow lg:basis-105">
+      <Window
+        title="карточка"
+        bar="butter"
+        size="sm"
+        class="absolute top-10 right-10 left-5 hidden rotate-3 shadow-px-md lg:block"
+      >
+        <div class="flex flex-col gap-3.5 p-5">
+          <div class="flex items-center gap-3.5">
+            <span class="flex size-12 items-center justify-center border-2 border-ink bg-lilac font-pixel text-16">С</span>
+            <div class="flex flex-col gap-1">
+              <span class="text-18 font-bold">Саша</span>
+              <span class="text-14 text-ink-muted">познакомились на митапе</span>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <Tag color="lilac">инвестор</Tag>
+            <Tag color="white">конференция 2026</Tag>
+          </div>
+        </div>
+      </Window>
+
+      <Window
+        title="напоминание"
+        bar="lilac"
+        size="sm"
+        class="absolute top-8.5 right-2 left-8.5 -rotate-2 shadow-px-mid lg:top-67.5 lg:right-0 lg:left-17.5 lg:shadow-px-md"
+      >
+        <PixelIcon slot="icon" name="bell" class="size-3 lg:size-3.5" />
+        <div class="flex flex-col gap-1.5 p-3.5 lg:gap-2 lg:p-5">
+          <span class="text-15 font-semibold lg:text-18">Пора написать Саше</span>
+          <span class="text-13 leading-note text-ink-muted lg:text-15 lg:leading-card">
+            «Давайте созвонимся после праздников» — договорились на митапе
+          </span>
+        </div>
+      </Window>
+
+      <PixelIcon
+        name="cursor"
+        class="absolute top-37.5 left-3.5 h-10.25 w-6.5 lg:top-102.5 lg:left-7.5 lg:h-14.25 lg:w-9"
+      />
+      <PixelIcon name="sparkle" class="absolute top-0 right-7.5 size-6 text-accent lg:right-2 lg:size-8" />
+      <PixelIcon name="sparkle-small" class="absolute top-55 left-0 hidden size-4 text-ink lg:block" />
+      <PixelIcon
+        name="heart"
+        class="absolute top-50 right-17.5 h-4.5 w-5.25 text-accent lg:top-117.5 lg:right-15 lg:h-6 lg:w-7"
+      />
+    </div>
+  </div>
+</section>
