@@ -1,0 +1,75 @@
+# Every push to main: build dist/, upload it to the server with rsync
+# and check that the home page answers 200 with the page that was just built.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+# One deploy at a time: a newer push waits for the running deploy instead of cancelling it
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  SITE_URL: https://context-crm.site/
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 12
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Build
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Set up SSH to the server
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ vars.DEPLOY_KNOWN_HOSTS }}
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          cat > ~/.ssh/config <<EOF
+          Host prod
+            HostName $DEPLOY_HOST
+            User $DEPLOY_USER
+            IdentityFile ~/.ssh/deploy_key
+            IdentitiesOnly yes
+            StrictHostKeyChecking yes
+          EOF
+
+      # The key is locked to the landing folder on the server (rrsync), so "." is that folder.
+      # --delete removes files that are gone from dist/, --delay-updates swaps all new files in at the end
+      - name: Upload dist/ to the server
+        run: rsync -rlpt --chmod=D755,F644 --delete-delay --delay-updates --itemize-changes dist/ prod:.
+
+      - name: Check the home page
+        run: |
+          expected=$(sha256sum < dist/index.html)
+          for _ in $(seq 1 10); do
+            if status=$(curl -sS -o page.html -w '%{http_code}' --max-time 10 "$SITE_URL") \
+              && [ "$status" = 200 ] && [ "$(sha256sum < page.html)" = "$expected" ]; then
+              echo "OK: $SITE_URL answers 200 with the new page"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "FAILED: $SITE_URL answers ${status:-nothing}, or the page is not the one just built" >&2
+          exit 1
