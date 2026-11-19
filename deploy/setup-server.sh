@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
-# One-time server setup for landing deploys, run as root: setup-server.sh "<public SSH key of GitHub Actions>"
+# One-time server setup for landing deploys, run as root from a copy of deploy/:
+#   setup-server.sh ["<public SSH key of GitHub Actions>"]
+# The key is needed on the first run only; to update the nginx site, run it again without the key.
 # The server is shared with the app, so it only adds our own things:
 # the landing user, /var/www/context-crm.site and the nginx site of the landing. Safe to run again.
 set -euo pipefail
 cd "$(dirname "$0")"
 
-deploy_key=${1:?usage: setup-server.sh \"<public SSH key of GitHub Actions>\"}
+deploy_key=${1:-}
 site_dir=/var/www/context-crm.site
 site=context-crm.site.conf
 
@@ -14,13 +16,19 @@ id landing > /dev/null 2>&1 || useradd --create-home --shell /bin/bash landing
 
 # The key can only upload files into the landing folder with rsync (rrsync -wo):
 # no shell, no reading files back, nothing outside the folder
-key_line="command=\"/usr/bin/rrsync -wo $site_dir\",restrict $deploy_key"
 install -d -o landing -g landing -m 700 /home/landing/.ssh
 keys=/home/landing/.ssh/authorized_keys
 touch "$keys"
-grep -qxF "$key_line" "$keys" || echo "$key_line" >> "$keys"
+if [ -n "$deploy_key" ]; then
+  key_line="command=\"/usr/bin/rrsync -wo $site_dir\",restrict $deploy_key"
+  grep -qxF "$key_line" "$keys" || echo "$key_line" >> "$keys"
+fi
 chown landing:landing "$keys"
 chmod 600 "$keys"
+if [ ! -s "$keys" ]; then
+  echo "landing has no SSH key yet: run again with the public key of GitHub Actions" >&2
+  exit 1
+fi
 
 install -d -o landing -g landing -m 755 "$site_dir"
 # Until the first deploy the folder shows the same placeholder as before, not an error
